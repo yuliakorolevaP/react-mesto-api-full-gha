@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routerUsers = require('./routes/users');
 const routerCards = require('./routes/cards');
+const cors = require('./middlewares/cors');
 const { createUser, login } = require('./controllers/users');
 const {
   validationCreateUser,
@@ -18,6 +19,7 @@ const NotFound = require('./errors/NotFound');
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(bodyParser.json());
+app.use(cors);
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb', {
   useNewUrlParser: true,

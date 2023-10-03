@@ -5,7 +5,7 @@ function handleResponse(res) {
   return Promise.reject(res.status);
 }
 
-export const BASE_URL = "https://auth.nomoreparties.co";
+export const BASE_URL = "http://api.yuliakorolyova.nomoredomainsrocks.ru";
 
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {

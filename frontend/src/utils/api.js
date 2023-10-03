@@ -71,11 +71,10 @@ class Api {
 }
 
 const api = new Api( {
-  link: 'https://mesto.nomoreparties.co/v1/cohort-68',
+  link: 'http://api.yuliakorolyova.nomoredomainsrocks.ru',
 headers: {
   authorization: '0be0e668-3bd1-4300-b735-a9364623e732',
   'Content-Type': 'application/json'
-// address: 'http://localhost:3000/'
 }
 });
 export default api;
