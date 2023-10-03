@@ -1,0 +1,9 @@
+.popup__title-zoom{
+  color: aliceblue;
+  align-self: baseline;
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}

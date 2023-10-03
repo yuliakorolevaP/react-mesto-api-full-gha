@@ -1,0 +1,23 @@
+.profile__info{
+  margin: 0 auto 0 0;
+  padding: 0;
+  max-width: 336px;
+  display: flex;
+  flex-direction: column;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media all and (max-width:1130px){
+  .profile__info{
+    margin-right: 100px;
+  }
+}
+
+@media all and (max-width:690px){
+  .profile__info{
+    margin-right: 0;
+    max-width: 100%;
+  }
+}

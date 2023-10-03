@@ -1,0 +1,15 @@
+.popup__form{
+  position: relative;
+  z-index: 2;
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+}
+
+@media all and (max-width:500px){
+  .popup__form{
+    width: 282px;
+  }
+}

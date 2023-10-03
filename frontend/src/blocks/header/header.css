@@ -1,0 +1,23 @@
+.header{
+  margin: 45px 0 40px 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 880px;
+  border-bottom: 1px solid rgb(84,84,84, 0.7);
+}
+
+
+@media all and (max-width: 880px){ 
+  .header {
+    margin: 45px auto 40px auto;
+    width: 90%;
+  }
+}
+
+@media all and (max-width: 400px){ 
+  .header {
+    margin: 28px 0 42px 0;
+    width: 100%;
+  }
+}

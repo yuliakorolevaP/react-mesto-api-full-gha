@@ -1,0 +1,7 @@
+.element__like-group{
+  margin: auto 0 auto 0;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  height: 35px;
+}

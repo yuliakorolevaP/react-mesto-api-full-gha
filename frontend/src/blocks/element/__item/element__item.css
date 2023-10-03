@@ -1,0 +1,19 @@
+.element__item{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 282px;
+  padding: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+@media all and (max-width:920px){
+  .element__item{
+    margin: 0 auto;
+  }
+}
