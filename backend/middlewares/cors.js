@@ -3,6 +3,7 @@ const allowedCors = [
   'https://yuliakorolyova.students.nomoredomainsrocks.ru',
   'http://api.yuliakorolyova.nomoredomainsrocks.ru',
   'http://localhost:3000',
+  'http://api.yuliakorolyova.nomoredomainsrocks.ru/signup',
 ];
 
 const cors = (req, res, next) => {
