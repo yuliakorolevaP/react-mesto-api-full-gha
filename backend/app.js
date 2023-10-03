@@ -19,7 +19,6 @@ const NotFound = require('./errors/NotFound');
 const { PORT = 3000 } = process.env;
 const app = express();
 app.use(bodyParser.json());
-app.use(cors);
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb', {
   useNewUrlParser: true,
@@ -30,7 +29,10 @@ mongoose.connect('mongodb://0.0.0.0:27017/mestodb', {
 }).catch(() => {
   console.log('Не удалось подключиться к БД');
 });
+app.use(cors());
+
 app.use(requestLogger);
+
 app.post('/signin', validationLogin, login);
 app.post('/signup', validationCreateUser, createUser);
 app.use(auth);
