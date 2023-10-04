@@ -5,8 +5,10 @@ function handleResponse(res) {
   return Promise.reject(res.status);
 }
 
-// export const BASE_URL = "https://api.yuliakorolyova.nomoredomainsrocks.ru";
-export const BASE_URL = 'http://localhost:3001'
+export const BASE_URL = "http://api.yuliakorolyova.nomoredomainsrocks.ru";
+// export const BASE_URL = "http://yuliakorolyova.students.nomoredomainsrocks.ru";
+
+// export const BASE_URL = 'http://localhost:3001'
 
 
 export function register(email, password) {
