@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path');
+// const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
@@ -21,7 +21,7 @@ const { PORT = 3001 } = process.env;
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect('mongodb://0.0.0.0:27017/mestodb', {
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   family: 4,
@@ -30,8 +30,8 @@ mongoose.connect('mongodb://0.0.0.0:27017/mestodb', {
 }).catch(() => {
   console.log('Не удалось подключиться к БД');
 });
-app.use(express.static(path.join(__dirname, 'frontend')));
-app.use(cors);
+// app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(cors());
 app.use(requestLogger);
 app.post('/signin', validationLogin, login);
 app.post('/signup', validationCreateUser, createUser);
