@@ -6,7 +6,6 @@ function handleResponse(res) {
 }
 
 export const BASE_URL = "https://api.yuliakorolyova.nomoredomainsrocks.ru";
-// export const BASE_URL = "http://localhost:3001";
 
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
