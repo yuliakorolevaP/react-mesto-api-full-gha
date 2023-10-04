@@ -19,7 +19,7 @@ const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFound = require('./errors/NotFound');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 app.use(express.static(path.join(__dirname, 'frontend')));
 app.use(cors());
@@ -28,7 +28,7 @@ app.use(requestLogger);
 app.use(express.json());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect('mongodb://0.0.0.0:27017/mestodb').then(() => {
+mongoose.connect(DB_URL).then(() => {
   console.log('БД подключена');
 }).catch(() => {
   console.log('Не удалось подключиться к БД');
