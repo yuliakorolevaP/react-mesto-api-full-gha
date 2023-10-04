@@ -106,7 +106,7 @@ module.exports.login = (req, res, next) => {
             throw new Unauthorized('Необходима авторизация');
           }
           const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'yandex', { expiresIn: '7d' });
-          res.status(200).cookie('jwt', token, { httpOnly: true }).send({ token });
+          res.send({ token });
         }).catch(next);
     })
     .catch((err) => next(err));
