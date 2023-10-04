@@ -1,10 +1,10 @@
-const { MONGO } = process.env;
+// const { MONGO } = process.env;
 const express = require('express');
-// const path = require('path');
+const path = require('path');
 const mongoose = require('mongoose');
 // const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+const cors = require('cors');
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 const routerUsers = require('./routes/users');
@@ -20,15 +20,15 @@ const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFound = require('./errors/NotFound');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
-// app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
-app.use(cors);
+app.use(cors({ origin: ['http://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://localhost:3001', 'http://localhost:3000'] }));
 app.use(requestLogger);
 
 app.use(express.json());
-mongoose.connect(MONGO).then(() => {
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb').then(() => {
   console.log('БД подключена');
 }).catch(() => {
   console.log('Не удалось подключиться к БД');

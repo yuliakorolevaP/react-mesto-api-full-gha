@@ -1,9 +1,10 @@
 const allowedCors = [
-  // 'http://yuliakorolyova.students.nomoredomainsrocks.ru',
-  // 'https://yuliakorolyova.students.nomoredomainsrocks.ru',
+  'http://yuliakorolyova.students.nomoredomainsrocks.ru',
+  'https://yuliakorolyova.students.nomoredomainsrocks.ru',
   'https://api.yuliakorolyova.nomoredomainsrocks.ru',
   'http://api.yuliakorolyova.nomoredomainsrocks.ru',
   'http://localhost:3001',
+  'http://localhost:3000',
 ];
 
 const cors = (req, res, next) => {
