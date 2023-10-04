@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 // const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+// eslint-disable-next-line import/no-extraneous-dependencies
+
 const routerUsers = require('./routes/users');
 const routerCards = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
@@ -31,7 +33,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   console.log('Не удалось подключиться к БД');
 });
 // app.use(express.static(path.join(__dirname, 'frontend')));
-app.use(cors);
+app.use(cors());
 
 app.use(requestLogger);
 app.use(express.json());
