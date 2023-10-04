@@ -22,7 +22,7 @@ const NotFound = require('./errors/NotFound');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-app.use(express.static(path.join(__dirname, 'frontend')));
+// app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use(cors({ origin: ['http://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://localhost:3001', 'http://localhost:3000'] }));
 app.use(requestLogger);
