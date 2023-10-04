@@ -23,7 +23,10 @@ const { PORT = 3000 } = process.env;
 const app = express();
 // app.use(express.static(path.join(__dirname, 'frontend')));
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://yuliakorolyova.students.nomoredomainsrocks.ru/', 'http://yuliakorolyova.students.nomoredomainsrocks.ru/', 'http://localhost:3001',
+  ],
+}));
 app.use(requestLogger);
 
 app.use(express.json());
