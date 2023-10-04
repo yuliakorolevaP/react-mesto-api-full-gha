@@ -1,9 +1,9 @@
 const allowedCors = [
-  'http://yuliakorolyova.students.nomoredomainsrocks.ru',
-  'https://yuliakorolyova.students.nomoredomainsrocks.ru',
+  // 'http://yuliakorolyova.students.nomoredomainsrocks.ru',
+  // 'https://yuliakorolyova.students.nomoredomainsrocks.ru',
   'http://api.yuliakorolyova.nomoredomainsrocks.ru',
   'http://localhost:3000',
-  'http://api.yuliakorolyova.nomoredomainsrocks.ru/signup',
+  'http://localhost:3001',
 ];
 
 const cors = (req, res, next) => {
@@ -12,15 +12,18 @@ const cors = (req, res, next) => {
   const requestHeaders = req.headers['access-control-request-headers'];
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+    res.header('Access-Control-Allow-Headers', requestHeaders);
+  }
+
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
-
     return res.end();
   }
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
+
   return next();
 };
 

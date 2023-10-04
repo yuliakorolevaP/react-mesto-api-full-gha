@@ -6,12 +6,12 @@ function handleResponse(res) {
 }
 
 export const BASE_URL = "http://api.yuliakorolyova.nomoredomainsrocks.ru";
+// export const BASE_URL = "http://localhost:3001";
 
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
-      'Accept': 'application/json',
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
@@ -22,20 +22,26 @@ export function login(email, password) {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      'Accept': 'application/json',
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then(handleResponse);
+  }).then(handleResponse)
+  // .then((data) => {
+  //   if (data.token) {
+  //     //Сохраним токен в localStorage пользователя
+  //     localStorage.setItem("jwt", data.token);
+  //     return data;
+  //   } 
+  // })
+  ;
 }
 
 export function checkToken(jwt) {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
-      'Accept': 'application/json',
       "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt}`,
+      "Authorization": `Bearer ${jwt}`,
     },
   }).then(handleResponse);
 }

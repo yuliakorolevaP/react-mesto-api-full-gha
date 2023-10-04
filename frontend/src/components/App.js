@@ -31,6 +31,37 @@ function App() {
   const [infoImage, setInfoImage] = useState("");
   const [infoText, setInfoText] = useState("");
   const [infoTooltip, setInfoTooltip] = useState(false);
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      Promise.all([api.getUserData(), api.getInitialCards()]).then(([userProfileData, initialCards]) => {
+        console.log(initialCards);
+        setCurrentUser(userProfileData);
+        setCards(initialCards);
+      })
+        .catch((err) => { console.log(`Возникла глобальная ошибка, ${err}`) })
+    };
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          setIsLoggedIn(true);
+          setEmail(res.email);
+          navigate('/', {replace: true})
+        }
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    if (isLoggedIn === true) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -72,54 +103,17 @@ function App() {
       localStorage.setItem("jwt", res.token);
       setIsLoggedIn(true);
       setEmail(email);
-      navigate("/");
+      navigate('/', {replace: true})
     }).catch(() => {
       setInfoImage(Unionx);
       setInfoText("Что-то пошло не так! Попробуйте ещё раз.");
       handleInfoTooltip();
     });
   }
-
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      auth.checkToken(jwt).then((res) => {
-        if (res) {
-          setIsLoggedIn(true);
-          setEmail(res.data.email);
-        }
-      }).catch((err) => {
-        console.error(err);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoggedIn === true) {
-      navigate("/");
-    }
-  }, [isLoggedIn, navigate]);
-
-  function onSignOut() {
-    setIsLoggedIn(false);
-    setEmail("");
-    navigate("/sign-in");
-    localStorage.removeItem("jwt");
-  }
-
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      Promise.all([api.getUserData(), api.getInitialCards()]).then(([userProfileData, initialCards]) => {
-        setCurrentUser(userProfileData);
-        setCards(initialCards);
-      })
-        .catch((err) => { console.log(`Возникла глобальная ошибка, ${err}`) })
-    };
-  }, [isLoggedIn]);
-
+    
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
@@ -172,6 +166,12 @@ function App() {
       });
   }
 
+  function onSignOut() {
+    setIsLoggedIn(false);
+    setEmail("");
+    navigate("/sign-in");
+    localStorage.removeItem("jwt");
+  }
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">

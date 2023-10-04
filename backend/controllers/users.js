@@ -1,3 +1,4 @@
+const { JWT_SECRET, NODE_ENV } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 // eslint-disable-next-line import/no-unresolved
@@ -11,7 +12,7 @@ const User = require('../models/user');
 module.exports.getAllUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.send({ data: users });
+      res.send({ users });
     })
     .catch((err) => next(err));
 };
@@ -22,7 +23,7 @@ module.exports.getUserById = (req, res, next) => {
       if (!user) {
         throw new NotFound('Пользователь не найден');
       }
-      res.send({ user });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -105,9 +106,13 @@ module.exports.login = (req, res, next) => {
           if (!match) {
             throw new Unauthorized('Необходима авторизация');
           }
-          const token = jwt.sign({ _id: user._id }, 'practicum2023', { expiresIn: '7d' });
-          res.status(200).cookie('jwt', token, { httpOnly: true }).send({ token });
-        }).catch((err) => next(err));
+          const token = jwt.sign(
+            { _id: user._id },
+            NODE_ENV === 'production' ? JWT_SECRET : 'yandex-praktikum',
+            { expiresIn: '7d' },
+          );
+          res.status(200).send({ token });
+        }).catch(next);
     })
     .catch((err) => next(err));
 };
@@ -117,7 +122,7 @@ module.exports.getCurrentUser = (req, res, next) => {
     if (!user) {
       throw new NotFound('Пользователь не найден');
     }
-    return res.status(200).send({ user });
+    return res.status(200).send(user);
   }).catch((err) => {
     if (err.name === 'CastError') {
       return next(new BadRequest('Переданы некорректные данные'));

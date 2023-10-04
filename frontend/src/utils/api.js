@@ -1,9 +1,8 @@
 class Api {
   constructor(data) {
-    this._link = data.link;
-    this._headers = data.headers;
+    this._link = data.link;  
   }
-  
+
   _handleResponse(res) {
     if (res.ok) {
       return res.json();
@@ -11,33 +10,51 @@ class Api {
       return Promise.reject(`код ошибки: ${res.status}`);
     }
   }
-  
+  // _getHeaders() {
+  //   const jwt = localStorage.getItem('jwt');
+  //   return {
+  //     'Authorization': `${jwt}`,
+  //     ...this._headers,
+  //   };
+  // }
+
   getInitialCards() {
     return fetch(`${this._link}/cards`, {
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      }
     })
     .then(res => this._handleResponse(res));
   }
 
   getUserData() {
     return fetch(`${this._link}/users/me`, {
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+      }
     })
     .then(res => this._handleResponse(res));
   }
 
-  addNewCard(data) {
+  addNewCard(user) {
     return fetch(`${this._link}/cards`, {
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      },
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify({name: user.name,
+        link: user.link,})
     })
     .then(res => this._handleResponse(res));
   }
   
   deleteCard(cardId) {
     return fetch(`${this._link}/cards/${cardId}`, {
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      },
       method: 'DELETE',
     })
       .then(res => { return this._handleResponse(res); })
@@ -45,7 +62,10 @@ class Api {
   
   sendUserData(profileData) {
     return fetch(`${this._link}/users/me`, {
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      },
       method: 'PATCH',
       body: JSON.stringify(profileData)
     })
@@ -54,7 +74,10 @@ class Api {
   
   sendAvatarData(avatarLink) {
     return fetch(`${this._link}/users/me/avatar`, {
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      },
       method: 'PATCH',
       body: JSON.stringify(avatarLink)
     })
@@ -63,7 +86,10 @@ class Api {
 
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._link}/cards/${cardId}/likes`, {
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json'
+      },
       method: `${!isLiked ? 'DELETE' : 'PUT'}`
     })
       .then(res => this._handleResponse(res));
@@ -72,9 +98,6 @@ class Api {
 
 const api = new Api( {
   link: 'http://api.yuliakorolyova.nomoredomainsrocks.ru',
-headers: {
-  authorization: '0be0e668-3bd1-4300-b735-a9364623e732',
-  'Content-Type': 'application/json'
-}
+  // link: 'http://localhost:3001',
 });
 export default api;
