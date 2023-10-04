@@ -1,4 +1,4 @@
-const { JWT_SECRET, NODE_ENV } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const Unauthorized = require('../errors/Unauthorized');
 
@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, `${NODE_ENV === 'production' ? JWT_SECRET : 'yandex-praktikum'}`);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'yandex');
   } catch (err) {
     next(new Unauthorized('Необходима авторизация'));
   }

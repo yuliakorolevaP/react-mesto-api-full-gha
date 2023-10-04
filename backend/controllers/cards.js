@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 const BadRequest = require('../errors/BadRequest');
 const NotFound = require('../errors/NotFound');
 const Forbidden = require('../errors/Forbidden');

@@ -97,7 +97,7 @@ class Api {
 }
 
 const api = new Api( {
-  link: 'https://api.yuliakorolyova.nomoredomainsrocks.ru',
-  // link: 'http://localhost:3001',
+  // link: 'https://api.yuliakorolyova.nomoredomainsrocks.ru',
+  link: 'http://localhost:3001',
 });
 export default api;

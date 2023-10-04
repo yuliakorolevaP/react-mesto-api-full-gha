@@ -1,7 +1,6 @@
-const { JWT_SECRET, NODE_ENV } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// eslint-disable-next-line import/no-unresolved
 const BadRequest = require('../errors/BadRequest');
 const NotFound = require('../errors/NotFound');
 const Conflict = require('../errors/Conflict');
@@ -106,12 +105,8 @@ module.exports.login = (req, res, next) => {
           if (!match) {
             throw new Unauthorized('Необходима авторизация');
           }
-          const token = jwt.sign(
-            { _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'yandex-praktikum',
-            { expiresIn: '7d' },
-          );
-          res.status(200).send({ token });
+          const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'yandex', { expiresIn: '7d' });
+          res.status(200).cookie('jwt', token, { httpOnly: true }).send({ token });
         }).catch(next);
     })
     .catch((err) => next(err));
