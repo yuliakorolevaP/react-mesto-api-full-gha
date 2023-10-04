@@ -1,10 +1,10 @@
 const { MONGO } = process.env;
 const express = require('express');
-const cors = require('cors');
 // const path = require('path');
 const mongoose = require('mongoose');
 // const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const cors = require('./middlewares/cors');
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 const routerUsers = require('./routes/users');
