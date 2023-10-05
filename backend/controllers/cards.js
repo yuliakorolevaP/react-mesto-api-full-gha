@@ -5,7 +5,7 @@ const Forbidden = require('../errors/Forbidden');
 const Card = require('../models/card');
 
 module.exports.getCard = (req, res, next) => {
-  Card.find({}).then((cards) => { res.send(cards); })
+  Card.find({}).sort({ createdAt: -1 }).then((cards) => { res.send(cards); })
     .catch((err) => next(err));
 };
 
@@ -29,7 +29,7 @@ module.exports.deleteCard = (req, res, next) => {
     } if (!card.owner.equals(req.user._id)) {
       throw new Forbidden('Доступ запрещен');
     }
-    card.deleteOne().then(() => res.send({ message: 'Карточка удалена' }));
+    card.deleteOne().then(() => res.send({ message: 'Карточка удалена' })).catch(next);
   })
     .catch((err) => {
       if (err.name === 'CastError') {

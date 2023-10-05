@@ -1,11 +1,10 @@
-// const { MONGO } = process.env;
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 // const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
-const path = require('path');
 const routerUsers = require('./routes/users');
 const routerCards = require('./routes/cards');
 const { createUser, login } = require('./controllers/users');
@@ -21,19 +20,18 @@ const errorHandler = require('./middlewares/errorHandler');
 const NotFound = require('./errors/NotFound');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+mongoose.connect(DB_URL);
 const app = express();
-app.use(express.static(path.join(__dirname, 'frontend')));
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // за 15 минут
   max: 100, // можно совершить максимум 100 запросов с одного IP
 });
 app.use(cors({ origin: ['http://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://localhost:3001', 'http://localhost:3000'] }));
-app.use(limiter);
 app.use(requestLogger);
+app.use(limiter);
 app.use(express.json());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect(DB_URL);
 
 app.get('/crash-test', () => {
   setTimeout(() => {

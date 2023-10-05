@@ -7,7 +7,6 @@ function handleResponse(res) {
 
 export const BASE_URL = "https://api.yuliakorolyova.nomoredomainsrocks.ru";
 
-
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
