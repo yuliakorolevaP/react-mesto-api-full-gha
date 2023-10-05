@@ -7,7 +7,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 62.84.113.218
+IP 62.84.113.218
 
 Frontend https://yuliakorolyova.students.nomoredomainsrocks.ru
 
