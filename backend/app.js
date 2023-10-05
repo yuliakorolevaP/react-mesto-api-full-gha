@@ -1,6 +1,7 @@
 // const { MONGO } = process.env;
 const express = require('express');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 // const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const cors = require('cors');
@@ -22,22 +23,23 @@ const NotFound = require('./errors/NotFound');
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 app.use(express.static(path.join(__dirname, 'frontend')));
-// app.use(cors());
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // за 15 минут
+  max: 100, // можно совершить максимум 100 запросов с одного IP
+});
 app.use(cors({ origin: ['http://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://yuliakorolyova.students.nomoredomainsrocks.ru', 'https://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://api.yuliakorolyova.nomoredomainsrocks.ru', 'http://localhost:3001', 'http://localhost:3000'] }));
+app.use(limiter);
 app.use(requestLogger);
 app.use(express.json());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-mongoose.connect(DB_URL).then(() => {
-  console.log('БД подключена');
-}).catch(() => {
-  console.log('Не удалось подключиться к БД');
+mongoose.connect(DB_URL);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
 });
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
 app.post('/signin', validationLogin, login);
 app.post('/signup', validationCreateUser, createUser);
 app.use(auth);

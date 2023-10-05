@@ -10,13 +10,6 @@ class Api {
       return Promise.reject(`код ошибки: ${res.status}`);
     }
   }
-  // _getHeaders() {
-  //   const jwt = localStorage.getItem('jwt');
-  //   return {
-  //     'Authorization': `${jwt}`,
-  //     ...this._headers,
-  //   };
-  // }
 
   getInitialCards() {
     return fetch(`${this._link}/cards`, {
@@ -98,7 +91,6 @@ class Api {
 
 const api = new Api( {
   link: 'https://api.yuliakorolyova.nomoredomainsrocks.ru',
-  // link: 'http://yuliakorolyova.students.nomoredomainsrocks.ru',
-  // link: 'http://localhost:3001',
+
 });
 export default api;

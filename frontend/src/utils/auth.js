@@ -6,9 +6,6 @@ function handleResponse(res) {
 }
 
 export const BASE_URL = "https://api.yuliakorolyova.nomoredomainsrocks.ru";
-// export const BASE_URL = "http://yuliakorolyova.students.nomoredomainsrocks.ru";
-
-// export const BASE_URL = 'http://localhost:3001'
 
 
 export function register(email, password) {
@@ -28,15 +25,7 @@ export function login(email, password) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then(handleResponse)
-  // .then((data) => {
-  //   if (data.token) {
-  //     //Сохраним токен в localStorage пользователя
-  //     localStorage.setItem("jwt", data.token);
-  //     return data;
-  //   } 
-  // })
-  ;
+  }).then(handleResponse);
 }
 
 export function checkToken(jwt) {
